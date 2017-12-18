@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>第一种</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .rating{
+            margin:100px;
+            /* width: 100px; */
+            height: 60px;
+            overflow: hidden;
+        }
+        .rating-item{
+            list-style: none;
+            float: left;
+            width: 35px;
+            height: 35px;
+            /* border: 1px solid #f00; */
+            background: url('./iVPGGC.png') no-repeat 0px 0px;
+            cursor: pointer;
+        }
+        /* .rating-item:hover{
+            background: url('./iVPGGC.png') no-repeat 0px -39px;
+        } */
+    </style>
+</head>
+<body>
+    <ul id="rating" class="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="很好"></li>
+    </ul>
+    <ul id="rating1" class="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="很好"></li>
+    </ul>
+</body>
+<script src="./jquery-3.2.1.slim.js"></script>
+<script>
+   
+   var rating = (function(){
+
+        var lightOn = function($item,num){
+            $item.each(function(index,ele){
+                if(index < num ){
+                    $(this).css("background","url('./iVPGGC.png') no-repeat 0px -39px");
+                }else{
+                    $(this).css("background","url('./iVPGGC.png') no-repeat 0px 0px");
+                }
+            });
+        };
+
+        var init = function(el,num){
+            var $rating = $(el),
+                $item = $rating.find('.rating-item');
+
+            lightOn($item,num);    
+
+            $rating.on('mouseover','.rating-item',function(e){
+                lightOn($item,$(this).index()+1);
+            }).on('click','.rating-item',function(){
+                num = $(this).index()+1;
+            }).on('mouseout',function(){
+                lightOn($item,num);
+            });
+        }
+
+        $.fn.extend({
+            rating:function(num){
+                return this.each(function(){
+                    init(this,num);
+                })
+            }
+        })
+
+        return {
+            init:init
+        }
+   })();
+   
+//    rating.init('#rating',3);
+//    rating.init('#rating1',2);
+$('.rating').rating(2);
+
+
+
+
+
+
+
+
+
+
+
+        // $('.rating-item').on('mouseover',function(e){
+        //     var $this = $(this);
+        //     $('.rating-item').each(function(index,ele){
+        //         var flag = true ;
+        //         if(index <= $this.index() ){
+        //             $(this).css("background","url('./iVPGGC.png') no-repeat 0px -39px");
+        //         }
+        //     });
+        // }).on('mouseout',function(){
+        //     $('.rating-item').each(function(index,ele){
+        //         $(this).css("background","url('./iVPGGC.png') no-repeat 0px 0px");
+        //     });
+        // });
+   
+
+</script>
+</html>
